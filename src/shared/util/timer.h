@@ -134,6 +134,14 @@ typedef uint64_t cycle64_t;
 
 #endif
 
+// not available on ARM
+#ifdef __arm__
+
+#define get_cycle(cnt) (cnt = 0)
+#define get_cycle64(cnt) (cnt = 0)
+
+#endif
+
 
 // The following is untested
 #ifdef Apertos

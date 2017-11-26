@@ -30,6 +30,11 @@
 #include <unistd.h>
 #include "qgetopt.h"
 
+#ifdef RASPBERRY_PI
+#include "interface/vcos/vcos.h"
+#include "bcm_host.h"
+#endif
+
 MainWindow* mainWinPtr = NULL;
 
 // Signal handler for breaks (Ctrl-C)
@@ -83,6 +88,11 @@ void printPathWarning() {
 
 int main(int argc, char *argv[])
 {
+#ifdef RASPBERRY_PI
+  bcm_host_init();
+  vcos_init();
+#endif
+
   signal(SIGINT,HandleStop);
   QApplication app(argc, argv);
 

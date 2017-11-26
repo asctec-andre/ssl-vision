@@ -62,6 +62,16 @@ else()
   message(STATUS "Flycapture NOT found => Flycap support disabled")
 endif()
 
+if(EXISTS "/opt/vc/include/bcm_host.h" AND ${CMAKE_SYSTEM_PROCESSOR} MATCHES "arm")
+  include_directories("/opt/vc/include")
+  add_definitions(-D RASPBERRY_PI)
+  set (SHARED_SRCS ${SHARED_SRCS} ${shared_dir}/capture/RPiCamera.cpp ${shared_dir}/capture/capture_rpi.cpp)
+  set (SHARED_HEADERS ${SHARED_HEADERS} ${shared_dir}/capture/RPiCamera.h ${shared_dir}/capture/capture_rpi.h)
+  set (RPI_LIBS mmal mmal_core mmal_util vcos bcm_host)
+  link_directories("/opt/vc/lib")
+  message(STATUS "Detected a Raspberry Pi platform => RPi camera support enabled")
+endif()
+
 find_package( OpenCV 2 QUIET )
 if(OpenCV_FOUND)
   include_directories(${OpenCV_INCLUDE_DIRS})
@@ -216,6 +226,7 @@ set (libs ${QT_LIBRARIES}
 	${mvIMPACT_LIBRARIES}
 	${OpenCV_LIBS}
 	${FLYCAP_LIBS}
+	${RPI_LIBS}
 	sslvision
 )
 

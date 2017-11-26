@@ -41,6 +41,10 @@
 #include "capture_flycap.h"
 #endif
 
+#ifdef RASPBERRY_PI
+#include "capture_rpi.h"
+#endif
+
 
 /*!
   \class   CaptureThread
@@ -59,6 +63,7 @@ protected:
   CaptureInterface * captureDC1394;
   CaptureInterface * captureV4L;
   CaptureInterface * captureBlueFox2;
+  CaptureInterface * captureRPi;
   CaptureInterface * captureFlycap;
   CaptureInterface * captureFiles;
   CaptureInterface * captureGenerator;
@@ -70,6 +75,7 @@ protected:
   VarList * dc1394;
   VarList * v4l;
   VarList * bluefox2;
+  VarList * rpi;
   VarList * flycap;
   VarList * generator;
   VarList * fromfile;

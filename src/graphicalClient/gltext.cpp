@@ -205,10 +205,10 @@ void GLText::initializeGlyph(char ch)
     
     for(int k=0; k<polygons[i].size(); k++){
       if(debugTesselation) printf("%8.3f,%8.3f\n",polygons[i][k].x(),polygons[i][k].y());
-      minX = min(minX, polygons[i][k].x());
-      maxX = max(maxX, polygons[i][k].x());
-      minY = min(minY, polygons[i][k].y());
-      maxY = max(maxY, polygons[i][k].y());
+      minX = min(minX, (double)polygons[i][k].x());
+      maxX = max(maxX, (double)polygons[i][k].x());
+      minY = min(minY, (double)polygons[i][k].y());
+      maxY = max(maxY, (double)polygons[i][k].y());
     }
   }
   glyph.ascent = fabs(minY)/FontRenderSize;

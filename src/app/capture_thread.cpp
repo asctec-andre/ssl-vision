@@ -68,7 +68,13 @@ CaptureThread::CaptureThread(int cam_id)
 #ifdef MVIMPACT
   captureModule->addItem("BlueFox2");
   settings->addChild( (VarType*) (bluefox2 = new VarList("BlueFox2")));
-  captureBlueFox2 = new CaptureBlueFox2(bluefox2,camId);
+  captureBlueFox2 = new CaptureBlueFox2(bluefox2, camId);
+#endif
+
+#ifdef RASPBERRY_PI
+  captureModule->addItem("RPi Camera");
+  settings->addChild( (VarType*) (rpi = new VarList("RPi Camera")));
+  captureRPi = new CaptureRPi(rpi, camId);
 #endif
 
   selectCaptureMethod();
@@ -105,6 +111,10 @@ CaptureThread::~CaptureThread()
 #ifdef MVIMPACT
   delete captureBlueFox2;
 #endif
+
+#ifdef RASPBERRY_PI
+  delete captureRPi;
+#endif
 }
 
 void CaptureThread::setFrameBuffer(FrameBuffer * _rb) {
@@ -138,6 +148,10 @@ void CaptureThread::selectCaptureMethod() {
 #ifdef FLYCAP
   } else if(captureModule->getString() == "Flycapture") {
     new_capture = captureFlycap;
+#endif
+#ifdef RASPBERRY_PI
+  } else if(captureModule->getString() == "RPi Camera") {
+    new_capture = captureRPi;
 #endif
   }
 
